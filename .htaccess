@@ -1,0 +1,80 @@
+# Protezione della cartella
+Options -Indexes
+
+# Impostazioni PHP
+<IfModule mod_php7.c>
+    php_flag display_errors Off
+    php_flag log_errors On
+    php_value error_log /path/to/error.log
+    
+    # Imposta limite di caricamento file
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+    
+    # Imposta durata della sessione
+    php_value session.gc_maxlifetime 3600
+    php_value session.cookie_lifetime 3600
+</IfModule>
+
+# Protezione contro l'accesso ai file PHP in alcune cartelle
+<FilesMatch "\.(php)$">
+    <IfModule mod_authz_core.c>
+        Require all granted
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Allow from all
+    </IfModule>
+</FilesMatch>
+
+# Non consentire l'accesso diretto a file specifici
+<FilesMatch "^(config|install)\.php$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order deny,allow
+        Deny from all
+    </IfModule>
+</FilesMatch>
+
+# Reindirizza dalla home alla dashboard
+RedirectMatch 302 ^/$ /index.php
+
+# Caching
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/jpg "access plus 1 year"
+    ExpiresByType image/jpeg "access plus 1 year"
+    ExpiresByType image/gif "access plus 1 year"
+    ExpiresByType image/png "access plus 1 year"
+    ExpiresByType image/svg+xml "access plus 1 year"
+    ExpiresByType text/css "access plus 1 month"
+    ExpiresByType application/javascript "access plus 1 month"
+    ExpiresByType application/x-javascript "access plus 1 month"
+    ExpiresByType image/x-icon "access plus 1 year"
+</IfModule>
+
+# Compressione
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/plain
+    AddOutputFilterByType DEFLATE text/html
+    AddOutputFilterByType DEFLATE text/xml
+    AddOutputFilterByType DEFLATE text/css
+    AddOutputFilterByType DEFLATE application/xml
+    AddOutputFilterByType DEFLATE application/xhtml+xml
+    AddOutputFilterByType DEFLATE application/rss+xml
+    AddOutputFilterByType DEFLATE application/javascript
+    AddOutputFilterByType DEFLATE application/x-javascript
+    AddOutputFilterByType DEFLATE application/json
+</IfModule>
+
+# Sicurezza
+<IfModule mod_headers.c>
+    # Protezione XSS
+    Header set X-XSS-Protection "1; mode=block"
+    # Impedisce MIME-type sniffing
+    Header set X-Content-Type-Options "nosniff"
+    # Permette di utilizzare risorse solo dallo stesso dominio
+    Header set X-Frame-Options "SAMEORIGIN"
+</IfModule>
