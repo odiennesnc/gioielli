@@ -1,0 +1,35 @@
+Ecco un riepilogo di cosa abbiamo creato:
+
+Sistema di autenticazione:
+
+Login e gestione sessioni per proteggere l'accesso ai dati
+Possibilità di creare utenti amministrativi
+Gestione articoli:
+
+Dashboard con statistiche e ultimi articoli
+Lista degli articoli in magazzino con possibilità di modifica/eliminazione
+Lista degli articoli venduti
+Form di inserimento e modifica articoli avanzati
+Funzionalità avanzate:
+
+Calcolo automatico dei costi e valori totali in tempo reale
+Gestione del prezzo dell'oro
+Possibilità di copiare i valori dai costi iniziali ai finali
+Interfaccia utente:
+
+Design responsive con Windmill Dashboard
+Supporto per temi chiari e scuri
+Interfaccia moderna e accattivante
+Sicurezza:
+
+Protezione contro SQL injection
+Password criptate
+Limitazione accessi
+Sessioni sicure
+Per utilizzare l'applicazione:
+
+Copia tutti i file in una cartella del server web
+Configura il database nel file config.php
+Esegui lo script di installazione install.php
+Accedi all'applicazione con le credenziali predefinite (email: admin@example.com, password: admin)
+Inizia a gestire il tuo inventario di gioielli!
