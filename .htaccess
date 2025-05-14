@@ -41,6 +41,41 @@ Options -Indexes
 # Reindirizza dalla home alla dashboard
 RedirectMatch 302 ^/$ /index.php
 
+# Abilita il motore di rewrite
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    # Se non è un file o directory esistente, procedi con il rewrite
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    
+    # URL SEO-friendly per l'elenco degli articoli
+    RewriteRule ^articoli/?$ articoli.php [L]
+    RewriteRule ^articoli/pagina/([0-9]+)/?$ articoli.php?page=$1 [L]
+    
+    # URL SEO-friendly per visualizzare un singolo articolo
+    RewriteRule ^articolo/([0-9]+)/?$ modifica_articolo.php?id=$1 [L]
+    RewriteRule ^articolo/([0-9]+)/([a-zA-Z0-9-]+)/?$ modifica_articolo.php?id=$1&slug=$2 [L]
+    
+    # URL SEO-friendly per aggiungere un nuovo articolo
+    RewriteRule ^nuovo-articolo/?$ nuovo_articolo.php [L]
+    
+    # URL SEO-friendly per gli articoli venduti
+    RewriteRule ^articoli-venduti/?$ articoli_venduti.php [L]
+    RewriteRule ^articoli-venduti/pagina/([0-9]+)/?$ articoli_venduti.php?page=$1 [L]
+    
+    # URL SEO-friendly per le impostazioni
+    RewriteRule ^impostazioni/?$ settings.php [L]
+    
+    # URL SEO-friendly per login/logout
+    RewriteRule ^accesso/?$ login.php [L]
+    RewriteRule ^esci/?$ logout.php [L]
+    
+    # Gestione degli errori 404
+    ErrorDocument 404 /index.php?error=404
+</IfModule>
+
 # Caching
 <IfModule mod_expires.c>
     ExpiresActive On
